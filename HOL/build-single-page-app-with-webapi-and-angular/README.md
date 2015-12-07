@@ -191,7 +191,7 @@ In this task you will start creating a new ASP.NET MVC project with support for 
     * **TriviaDatabaseInitializer:** the implementation of the Entity Framework initializer for the **TriviaContext** class which inherits from **CreateDatabaseIfNotExists**. The default behavior of this class is to create the database only if it does not exist, inserting the entities specified in the **Seed** method.
 
 10. Open **Web.Config** and add the following line 
-	```
+	```xml
 	<connectionStrings>
 		<add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-GeekQuiz-20141209041032.mdf;Initial Catalog=aspnet-GeekQuiz-20141209041032;Integrated Security=True" providerName="System.Data.SqlClient" />
 	</connectionStrings>
