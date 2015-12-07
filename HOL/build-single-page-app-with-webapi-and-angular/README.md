@@ -190,7 +190,7 @@ In this task you will start creating a new ASP.NET MVC project with support for 
     * **TriviaContext:** represents the Entity Framework's database context of the Geek Quiz application. This class derives from **DbContext** and exposes **DbSet** properties that represent collections of the entities described above.
     * **TriviaDatabaseInitializer:** the implementation of the Entity Framework initializer for the **TriviaContext** class which inherits from **CreateDatabaseIfNotExists**. The default behavior of this class is to create the database only if it does not exist, inserting the entities specified in the **Seed** method.
 
-10. Open **Web.Config** and add the following line 
+10. Open **Web.Config** and add the following line beneath `</configSections>`: 
 	```xml
 	<connectionStrings>
 		<add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-GeekQuiz-20141209041032.mdf;Initial Catalog=aspnet-GeekQuiz-20141209041032;Integrated Security=True" providerName="System.Data.SqlClient" />
@@ -487,6 +487,8 @@ In this task you will verify that the Web API service you built in the previous 
 
 > _Internet Explorer option_
 
+> **VISUAL STUDIO 2015, UPDATE 1** This is not important anymore.
+
 1. Press **F5** to run the solution. The Log in page should appear in the browser.
 
     > **Note:** When the application starts, the default MVC route is triggered, which by default is mapped to the Index action of the HomeController class. Since HomeController is restricted to authenticated users (remember that you decorated that class with the Authorize attribute previously) and there is no user authenticated yet, the application redirects the original request to the log in page.
@@ -516,6 +518,8 @@ In this task you will verify that the Web API service you built in the previous 
     _User Profile page_
 
 5. Go back to Visual Studio and expand the **Controllers** folder and then open the **HomeController.cs** file.
+
+> **VISUAL STUDIO 2015, UPDATE 1**: This code has moved to it's own file instead, **UserProfileController.cs**
 
 	You will see a **UserProfile()** action that contains code to retrieve a token and then call the Graph API. This code is duplicated below:
 
