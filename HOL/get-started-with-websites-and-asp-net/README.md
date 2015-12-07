@@ -36,7 +36,7 @@ In this task you will create the web application that is going to be used throug
 
     _New ASP.NET Project dialog box_
 
-	>**VS2015, UPDATE 1** It says *App Service* in the drop downbox for Microsoft Azure, instead of *Web App*
+	> **VS2015, UPDATE 1** It says *App Service* in the drop downbox for Microsoft Azure, instead of *Web App*
 
 5. If you haven't already signed in to Azure, Visual Studio prompts you to do so. Click **Sign In**. Follow the prompts and provide your credentials.
 

@@ -1,4 +1,4 @@
-﻿Building a Single Page Application (SPA) with ASP.NET Web API and Angular.js using Azure Active Directory to Log in Users
+Building a Single Page Application (SPA) with ASP.NET Web API and Angular.js using Azure Active Directory to Log in Users
 =======================================================================================
 
 In traditional web applications, the client (browser) initiates the communication with the server by requesting a page. The server then processes the request and sends the HTML of the page to the client. In subsequent interactions with the page –e.g. the user navigates to a link or submits a form with data– a new request is sent to the server, and the flow starts again: the server processes the request and sends a new page to the browser in response to the new action requested by the client.
@@ -109,11 +109,16 @@ In this task you will start creating a new ASP.NET MVC project with support for 
 
     _Creating a new project with the MVC template, including Web API components_
 
+	> **VS2015, UPDATE 1** It says *App Service* in the drop downbox for Microsoft Azure, instead of *Web App*
+
 4. On the **Change Authentication** dialog, select **Organizational Accounts**.
 
 	These options can be used to automatically register your application with Azure AD as well as to automatically configure your application to integrate with Azure AD. You don't have to use the **Change Authentication** dialog to register and configure your application, but it makes it much easier. If you are using Visual Studio 2012 for example, you can still manually register the application in the Azure Management Portal and update its configuration to integrate with Azure AD.
 
 	In the drop-down menus, select **Cloud - Single Organization** and **Single Sign On, Read directory data**. Enter the domain for your Azure AD directory (e.g. myADdomainoutlook.onmicrosoft.com) and then click **OK**. You can get the domain name from the Domains tab for the Default Directory on the azure portal (see the next image down).
+
+	> **VS2015, UPDATE 1**: It could instead of *Organizational Accounts* say *Work And School Accounts*.
+	> Enable *Read directory data*.
 
     ![Changing Authentication_](./images/changingAutentication.png)
 
@@ -136,6 +141,22 @@ In this task you will start creating a new ASP.NET MVC project with support for 
 6. After you've successfully authenticated, the **New ASP.NET Project** dialog will show your authentication choice (**Organizational Auth**) and the directory where the new application will be registered (_your_account_name_.onmicrosoft.com in the image below). Check the box for **Web API**. Click **OK**.
 
 7. The **Configure Microsoft Azure Web App** dialog will appear, using an auto-generated site name and region. Also note the account you're currently signed into in the dialog. You want to make sure that this account is the one that your Azure subscription is attached to, typically a Microsoft account.
+
+
+	>**VS2015, UPDATE 1** The wizard has changed significally in this release.
+	>It is now a two step process, where you first create the App Service (Web App) and in the next step the database.
+
+	>![Configure Web App](./images/vs2015-configure-webapp.png)
+
+	> * Make sure that the first field in this form has the label **Web App Name**. If it doesn't, change it with the drop down **Change Type**.
+	> * Enter a new name for the **Resource Group** directally into the field *Resource Group*, to create a new one.
+	> * Create the new **App Service Plan** by clicking on the *New* button.
+	> * **DO NOT CLICK ON THE CREATE BUTTON**, choose *Services* instead, to create the database.
+
+	>![Configure database](./images/vs2015-configure-database.png)
+	
+	> * Click on the **plus sign** to the right of resources type *SQL Database*.
+	> * Now you can click **Create**.
 
 	This project requires a database. You need to select one of your existing databases, or create a new one. A database is required because the project already uses a local database file to store a small amount of authentication configuration data. When you deploy the application to an App Service Web App, this database isn't packaged with the deployment, so you need to choose one that's accessible in the cloud. Click **OK**.
 
@@ -169,13 +190,19 @@ In this task you will start creating a new ASP.NET MVC project with support for 
     * **TriviaContext:** represents the Entity Framework's database context of the Geek Quiz application. This class derives from **DbContext** and exposes **DbSet** properties that represent collections of the entities described above.
     * **TriviaDatabaseInitializer:** the implementation of the Entity Framework initializer for the **TriviaContext** class which inherits from **CreateDatabaseIfNotExists**. The default behavior of this class is to create the database only if it does not exist, inserting the entities specified in the **Seed** method.
 
-10. Open the **Global.asax.cs** file and add the following using statement.
+10. Open **Web.Config** and add the following line 
+	```
+	<connectionStrings>
+		<add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-GeekQuiz-20141209041032.mdf;Initial Catalog=aspnet-GeekQuiz-20141209041032;Integrated Security=True" providerName="System.Data.SqlClient" />
+	</connectionStrings>
+	```
+11. Open the **Global.asax.cs** file and add the following using statement.
 
     ```C#
     using GeekQuiz.Models;
     ```
 
-11. Update the **Application_Start** method, adding the sentence to set the **TriviaDatabaseInitializer** as the database initializer at the beginning, as shown below.
+12. Update the **Application_Start** method, adding the sentence to set the **TriviaDatabaseInitializer** as the database initializer at the beginning, as shown below.
 
 	<!-- mark:3 -->
     ```C#
@@ -191,7 +218,7 @@ In this task you will start creating a new ASP.NET MVC project with support for 
 	}
     ```
 
-12. Now you will modify the **Home** controller to restrict access to authenticated users. To do this, open the **HomeController.cs** file inside the **Controllers** folder and add the **Authorize** attribute to the **HomeController** class definition.
+13. Now you will modify the **Home** controller to restrict access to authenticated users. To do this, open the **HomeController.cs** file inside the **Controllers** folder and add the **Authorize** attribute to the **HomeController** class definition.
 
     <!-- mark:3 -->
     ```C#
@@ -212,7 +239,7 @@ In this task you will start creating a new ASP.NET MVC project with support for 
 
     > **Note:** The **Authorize** filter checks to see if the user is authenticated. If the user is not authenticated, it returns HTTP status code 401 (Unauthorized) without invoking the action. You can apply the filter globally, at the controller level, or at the level of individual actions.
 
-13. You will now customize the layout of the web pages and the branding. To do this, open the **_Layout.cshtml** file inside the **Views | Shared** folder and update the content of the `<title>` element by replacing _My ASP.NET Application_ with _Geek Quiz_.
+14. You will now customize the layout of the web pages and the branding. To do this, open the **_Layout.cshtml** file inside the **Views | Shared** folder and update the content of the `<title>` element by replacing _My ASP.NET Application_ with _Geek Quiz_.
 
     <!-- mark:4 -->
     ```HTML
@@ -225,7 +252,7 @@ In this task you will start creating a new ASP.NET MVC project with support for 
     </head>
     ```
 
-14. In the same file, update the navigation bar by removing the _About_ and _Contact_ links and renaming the _Home_ link to _Play_. Additionally, rename the _Application name_ link to _Geek Quiz_. The HTML for the navigation bar should look like the following code.
+15. In the same file, update the navigation bar by removing the _About_ and _Contact_ links and renaming the _Home_ link to _Play_. Additionally, rename the _Application name_ link to _Geek Quiz_. The HTML for the navigation bar should look like the following code.
 
     <!-- mark:9,13 -->
     ```HTML
@@ -249,7 +276,7 @@ In this task you will start creating a new ASP.NET MVC project with support for 
     </div>
     ```
 
-15. Update the footer of the layout page by replacing _My ASP.NET Application_ with _Geek Quiz_. To do this, replace the content of the `<footer>` element with the one in the following code.
+16. Update the footer of the layout page by replacing _My ASP.NET Application_ with _Geek Quiz_. To do this, replace the content of the `<footer>` element with the one in the following code.
 
     <!-- mark:5 -->
     ```HTML
@@ -273,6 +300,8 @@ In the previous task, you created the initial structure of the Geek Quiz web app
 You will use the ASP.NET Scaffolding tools provided by Visual Studio to create the baseline for the Web API controller class.
 
 1. Open the **WebApiConfig.cs** file inside the **App_Start** folder. This file defines the configuration of the Web API service, like how routes are mapped to Web API controller actions.
+
+> NOTE: If you can't find it, you have missed to enable Web Api in the dialog box when creating the project.
 
 2. Add the following using statement at the beginning of the file.
 
