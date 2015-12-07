@@ -1,4 +1,4 @@
-﻿# Getting started with Azure App Service Web Apps and ASP.NET
+# Getting started with Azure App Service Web Apps and ASP.NET
 
 This lab shows how to create an ASP.NET web application and deploy it to an Azure App Service Web App by using Visual Studio 2015 Preview. It assumes that you have no prior experience using Azure or ASP.NET. On completing the lab, you will have a simple web application up and running in the cloud.
 
@@ -36,11 +36,29 @@ In this task you will create the web application that is going to be used throug
 
     _New ASP.NET Project dialog box_
 
+	>**VS2015, UPDATE 1** It says *App Service* in the drop downbox for Microsoft Azure, instead of *Web App*
+
 5. If you haven't already signed in to Azure, Visual Studio prompts you to do so. Click **Sign In**. Follow the prompts and provide your credentials.
 
 	![Sign in to Azure](./images/sign-to-Azure.png)
 
     _Sign in to Azure_
+
+>**VS2015, UPDATE 1** The wizard has changed significally in this release.
+>It is now a two step process, where you first create the App Service (Web App) and in the next step the database.
+
+>![Configure Web App](./images/vs2015-configure-webapp.png)
+
+> * Make sure that the first field in this form has the label **Web App Name**. If it doesn't, change it with the drop down **Change Type**.
+> * Enter a new name for the **Resource Group** directally into the field *Resource Group*, to create a new one.
+> * Create the new **App Service Plan** by clicking on the *New* button.
+> * **DO NOT CLICK ON THE CREATE BUTTON**, choose *Services* instead, to create the database.
+
+>![Configure database](./images/vs2015-configure-database.png)
+>
+> * Click on the **plus sign** to the right of resources type *SQL Database*.
+> * Now you can click **Create**.
+
 
 6. The configuration wizard will suggest a unique name based on *ContactManager* (see the image below). Select a region near you. You can use [azurespeed.com](http://www.azurespeed.com/ "AzureSpeed.com") to find the lowest latency data center.
 7. If you haven't created a database server before, select **Create new server**, enter a database user name and password.
@@ -216,6 +234,9 @@ The [Azure Preview Portal](https://portal.azure.com/) is a web interface that en
 	On the left, click on **Browse** and then scroll down until you find **Web Apps**. Click on **Web Apps**.
 
 	![Browse to Web Apps](./images/browse-to-web-apps.png)
+> **UPDATE PORTAL**: *Browse* is now not a button, it's a link that are displayed in teh bottom of the list to the left.
+> 
+> In the list search for *App Services*, instead of *Web Apps*.
 
 2. Click the name of your Web App on the blade.
 
@@ -257,6 +278,8 @@ The [Azure Preview Portal](https://portal.azure.com/) is a web interface that en
 ##Appendix - Cleanup
 
 In this task you will learn how to delete the Web App published in the previous section.
+
+> **UPDATE:** You can also find the *Resoruce Group*, where you have put your *Web App* and your *SQL Database* in, and delete this.
 
 1. In your browser, go to [http://portal.azure.com](http://portal.azure.com), and sign in with your Azure credentials.
 
