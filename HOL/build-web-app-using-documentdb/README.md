@@ -1,4 +1,4 @@
-﻿Building a web application with ASP.NET MVC using DocumentDB
+Building a web application with ASP.NET MVC using DocumentDB
 =======================================================================================
 
 **Azure DocumentDB** is a fully-managed, highly-scalable, NoSQL document database service provided by Azure. Its many benefits include rich query over a schema-free JSON data model, transactional execution of JavaScript logic, and scalable storage and throughput. You can find out more about DocumentDB online in the [Microsoft Azure subsite for DocumentDB](http://azure.microsoft.com/en-us/services/documentdb/).
@@ -90,6 +90,8 @@ Name the project _Todo_, choose a **Location** and click **OK**.
 
 1. In the **New ASP.NET Project** dialog box, select **MVC**. Make sure that the **Host in the cloud** option is also selected, and change the Authentication method to **No Authentication**. Click **Ok**.
 
+	> **VS2015, UPDATE 1** It says *App Service* in the drop downbox for Microsoft Azure, instead of *Web App*
+
 	![Creating a new MVC project](images/creating-a-new-mvc-project.png?raw=true)
 
     _Creating a new project with the MVC template_
@@ -103,6 +105,16 @@ Name the project _Todo_, choose a **Location** and click **OK**.
 1. The **Configure Microsoft Azure Website** dialog box will appear, using an auto-generated site name. Select a region (e.g.: _West US_). Also take note of which account you are currently signed into in the dialog box. You want to make sure that this is the account your Azure subscription is attached to (usually a Microsoft account).
 
 	This project does not require a database, as it will be using a new Azure DocumentDB account created later in the Azure Preview portal, so make sure **No database** is selected in the **Database server** field.
+
+>**VS2015, UPDATE 1** The wizard has changed significally in this release.
+>It is now a two step process, where you first create the App Service (Web App) and in the next step the database.
+
+>![Configure Web App](./images/vs2015-configure-webapp.png)
+
+> * Make sure that the first field in this form has the label **Web App Name**. If it doesn't, change it with the drop down **Change Type**.
+> * Enter a new name for the **Resource Group** directally into the field *Resource Group*, to create a new one.
+> * Create the new **App Service Plan** by clicking on the *New* button.
+
 
 1. Click **OK**.
 
@@ -128,6 +140,8 @@ The DocumentDB .NET SDK is packaged and distributed as a NuGet package. To get t
 	_Opening Manage NuGet Packages_
 
 1. In the Search box, type **Azure DocumentDB**. From the results, select the **Microsoft Azure DocumentDB Client Libraries** package that has id **Microsoft.Azure.Documents.Client** and click **Install**.
+
+> **VISUAL STUDIO 2015, UPDATE 1**: The package that you should install has the name **Microsoft.Azure.DocumentDB**.
 
 	This will download and install the DocumentDB client package as well as all dependencies, like Newtonsoft.Json.
 
